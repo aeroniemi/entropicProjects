@@ -1,0 +1,91 @@
+<html>
+
+<head>
+    <link href="sideDisplay.css" rel="stylesheet">
+</head>
+
+<body>
+    <div class="screen-side" id="side-screen-main">
+        <div class="side-screen-head">
+            <div class="side-screen-head-left">
+                <div class="side-screen-head-top hLeft">
+                    <div class="vMiddle yellow">FAULT</div>
+                </div>
+                <div class="side-screen-head-bottom hLeft">
+                    <div class="vMiddle">MEMO</div>
+                </div>
+            </div>
+            <div class="side-screen-head-middle">
+                <div class="vMiddle">MAIN MENU</div>
+            </div>
+            <div class="side-screen-head-right">
+                <div class="side-screen-head-top hRight">
+                    <div class="vMiddle">MSG</div>
+                </div>
+                <div class="side-screen-head-bottom hRight">
+                    <div class="vMiddle green">XFR</div>
+                </div>
+            </div>
+        </div>
+        <div class="side-screen-row">
+            <div class="side-screen-row-left">
+                <button class="btn side-screen-large-button-left">AIRPORT MAP</button>
+            </div>
+            <div class="side-screen-row-middle">
+                <div class="side-screen-row-middle-left">
+                    <div class="vMiddle">MEMO</div>
+                </div>
+            </div>
+
+        </div>
+        <div class="side-screen-row">
+            <div class="side-screen-row-left">
+                <button class="btn side-screen-large-button-left">PERFORMANCE</button>
+            </div>
+            <div class="side-screen-row-right">
+                <button class="btn side-screen-large-button-right">DOCUMENTS</button>
+            </div>
+
+
+
+        </div>
+        <div class="side-screen-row"></div>
+        <div class="side-screen-row"></div>
+        <div class="side-screen-row"></div>
+        <div class="side-screen-row"></div>
+        <div class="side-screen-row">
+            <div class="side-screen-row-left">
+                <button class="btn side-screen-large-button-left">IDENT PAGE</button>
+            </div>
+        </div>
+        <div class="side-screen-row">
+            <div class="side-screen-row-left">
+                <button class="btn side-screen-large-button-left">SYSTEM PAGE</button>
+            </div>
+            <div class="side-screen-row-middle">
+                <div class="side-screen-row-middle-left">
+                    <div class="vMiddle yellow">FAULT</div>
+                </div>
+            </div>
+            <div class="side-screen-row-right">
+                <button class="btn side-screen-large-button-right">INITIALIZE FLIGHT</button>
+            </div>
+        </div>
+
+        <script>
+            var screen = document.getElementById('side-screen-main');
+
+            var viewport_set = function () {
+                screen.style.width = (parseInt(window.innerHeight) / 12) * 9;
+                console.log(window.innerHeight);
+                console.log(screen.style.width)
+            }
+            viewport_set();
+            window.onresize = function () {
+                viewport_set();
+            }
+
+        </script>
+</body>
+
+</html>
