@@ -31,6 +31,12 @@ button {
     height: 100%;
     vertical-align: middle;
 }
+.vBottom:before {
+    content: "";
+    display: inline-block;
+    height: 100%;
+    vertical-align: bottom;
+}
 
 .side-screen-head-middle {
     height: 100%;
@@ -74,6 +80,9 @@ button {
     text-align: left;
     margin-Left: 1em;
 }
+.hMiddle {
+    text-align: center;
+    }
 
 .green {
     color: #7CFF00;
@@ -88,7 +97,13 @@ button {
 }
 
 
-
+.pageTitle {
+    transform: translateY(50%);
+    text-align: center;
+    width:100%;
+    height:100%;
+    font-size: 1.4em;
+}
 
 .side-screen-row-middle {
     height: 100%;
@@ -115,6 +130,22 @@ button {
     position: relative;
 
 }
+.side-screen-row-wleft {
+    height: 100%;
+    width: 48%;
+    text-align: center;
+    float: left;
+    position: relative;
+}
+
+.side-screen-row-wright {
+    height: 100%;
+    width: 48%;
+    text-align: center;
+    float: right;
+    position: relative;
+
+}
 
 .side-screen-row-middle-left {
     width: 50%;
@@ -135,6 +166,28 @@ button {
 .side-screen-large-button-left {
     width: 100%;
     height: 70%;
+    background-color: #7a7a7a;
+    font-size: 1.5em;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #ffffff;
+}
+
+.side-screen-vlarge-button-left {
+    width: 100%;
+    height: 90%;
+    background-color: #7a7a7a;
+    font-size: 1.5em;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #ffffff;
+}
+
+.side-screen-vlarge-button-right {
+    width: 100%;
+    height: 90%;
     background-color: #7a7a7a;
     font-size: 1.5em;
     position: absolute;

@@ -1,0 +1,109 @@
+<html>
+
+<head>
+    <link href="sideDisplay.css" rel="stylesheet">
+</head>
+
+<body>
+    <div class="screen-side" id="side-screen-main">
+        <div class="side-screen-head">
+            <div class="side-screen-head-left">
+                <div class="side-screen-head-top hLeft">
+                    <div class="vMiddle yellow">FAULT</div>
+                </div>
+                <div class="side-screen-head-bottom hLeft">
+                    <div class="vMiddle">MEMO</div>
+                </div>
+            </div>
+            <div class="side-screen-head-middle">
+                <div class="vMiddle">ROUTE SETUP</div>
+            </div>
+            <div class="side-screen-head-right">
+                <div class="side-screen-head-top hRight">
+                    <div class="vMiddle">MSG</div>
+                </div>
+                <div class="side-screen-head-bottom hRight">
+                    <div class="vMiddle green">XFR</div>
+                </div>
+            </div>
+        </div>
+        <div class="side-screen-row">
+            <div class="pageTitle">METRO OAKLAND INTL KOAK</div>
+        </div>
+        <div class="side-screen-row">
+            <div class="side-screen-row-wleft">
+                <button class="btn side-screen-vlarge-button-left">SID CNDEL3</button>
+            </div>
+            <div class="side-screen-row-wright">
+                <button class="btn side-screen-vlarge-button-right">SID NUEVO8</button>
+            </div>
+        </div>
+        <div class="side-screen-row">
+            <div class="side-screen-row-wleft">
+                <button class="btn side-screen-vlarge-button-left">SID CNDEL3</button>
+            </div>
+            <div class="side-screen-row-wright">
+                <button class="btn side-screen-vlarge-button-right">SID NUEVO8</button>
+            </div>
+        </div>
+        <div class="side-screen-row">
+            <div class="side-screen-row-wleft">
+                <button class="btn side-screen-vlarge-button-left">SID CNDEL3</button>
+            </div>
+            <div class="side-screen-row-wright">
+                <button class="btn side-screen-vlarge-button-right">SID NUEVO8</button>
+            </div>
+        </div>
+        <div class="side-screen-row">
+            <div class="side-screen-row-wleft">
+                <button class="btn side-screen-vlarge-button-left">SID CNDEL3</button>
+            </div>
+            <div class="side-screen-row-wright">
+                <button class="btn side-screen-vlarge-button-right">SID NUEVO8</button>
+            </div>
+        </div>
+        <div class="side-screen-row">
+            <div class="side-screen-row-wleft">
+                <button class="btn side-screen-vlarge-button-left">SID CNDEL3</button>
+            </div>
+            <div class="side-screen-row-wright">
+                <button class="btn side-screen-vlarge-button-right">SID NUEVO8</button>
+            </div>
+        </div>
+
+        <div class="side-screen-row">
+            <div class="side-screen-row-left">
+                <button class="btn side-screen-half-button-left btn-blue-edge">EDIT CLIP
+            </div>
+            <div class="side-screen-row-right">
+                <button class="btn side-screen-half-button-right">ROUTE SETUP
+            </div>
+        </div>
+        <div class="side-screen-row">
+            <div class="side-screen-row-left">
+                <button class="btn side-screen-half-button-left btn-blue-edge">AIRPORT SEARCH
+            </div>
+            <div class="side-screen-row-right">
+                <button class="btn side-screen-half-button-right btn-blue-edge">CHART UTILITIES
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        var screen = document.getElementById('side-screen-main');
+
+        var viewport_set = function () {
+            screen.style.width = (parseInt(window.innerHeight) / 12) * 9;
+            console.log(window.innerHeight);
+            console.log(screen.style.width)
+        }
+        viewport_set();
+        window.onresize = function () {
+            viewport_set();
+        }
+
+    </script>
+</body>
+
+</html>
