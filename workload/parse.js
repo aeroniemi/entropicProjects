@@ -44,27 +44,18 @@ function assembleUsefulSubTable(image) {
     })
 }
 
-function managePilot(pilot) {
-
-}
-async function findIdentities(old, data) {
-    return new Promise(function (resolve, reject) {
-        // // resolve(data.pilots[1].callsign)
-        // var pilotPromises = data.pilots.map(function (pilot) {
-        //     return pilot.callsign
-        // })
-        // Promise.all(pilotPromises).then((results) =>
-        //     resolve(results)
-        // )
-        var output = {
-            connected_clients: Math.random(),
-            unique_users: Math.random()
-        }
-        old.push(output)
-        resolve(old)
-
-    })
-}
+// async function findIdentities(old, data) {
+//     var output = {
+//         connected_clients: Math.random(),
+//         unique_users: Math.random()
+//     }
+//     if (old == 0) {
+//         return output
+//     }
+//     console.log("hi", old)
+//     old.push(output)
+//     return old
+// }
 
 // function mergeIdentities(table) {
 //     return new Promise(function (resolve, reject) {
@@ -81,59 +72,69 @@ async function findIdentities(old, data) {
 //         resolve(result)
 //     })
 // }
-// function managePilotOne(pilot) {
-//     return new Promise(function (resolve, reject) {
-//         var outputPilot = {
-//             cid: pilot.cid,
-//             name: pilot.name,
-//             callsign: pilot.callsign,
-//             logon_time = pilot.logon_time
-//         }
-//         var currentLog = {
-//             timestamp = pilot.last_updated,
-//             latitude = pilot.latitude,
-//             longitude = pilot.longitude,
-//             altitude = pilot.altitude,
-//             groundspeed = pilot.groundspeed,
-//             heading = pilot.heading,
-//             qnh_mb = pilot.qnh_mb
-//         }
-//     })
-// }
+function managePilotOne(pastTable, pilot) {
+    // return new Promise(function (resolve, reject) {
+    // console.log(pastTable)
+    var pastIndex = -1
+    var currentLog = {
+        timestamp: pilot.last_updated,
+        latitude: pilot.latitude,
+        longitude: pilot.longitude,
+        altitude: pilot.altitude,
+        groundspeed: pilot.groundspeed,
+        heading: pilot.heading,
+        qnh_mb: pilot.qnh_mb
+    }
+    var outputPilot = {
+        cid: pilot.cid,
+        name: pilot.name,
+        callsign: pilot.callsign,
+        logon_time: pilot.logon_time,
+        log: [currentLog]
+    }
+
+    pastTable.forEach((v, i) => {
+        if (v.cid == pilot.cid) {
+            console.log("found a match")
+            outputPilot.log = v.log
+            outputPilot.log.push(currentLog)
+            return [outputPilot, true]
+        }
+    })
+    return [outputPilot, false]
+}
+function findIdentities(last, data) {
+    return new Promise(function (resolve, reject) {
+        // console.log({}, data.pilots[1])
+        var pilot = managePilotOne(last, data.pilots[1])
+        var output = {
+            connected_clients: data.general.connected_clients,
+            unique_users: data.general.unique_users
+        }
+        var cur = last
+        if (pilot[2] == true) {
+
+        } else {
+            cur.push(pilot[1])
+        }
+
+
+        resolve(cur)
+    })
+}
 function mergeIdentities(table) {
     return new Promise(function (resolve, reject) {
         // var promises = table.map(function (ele) {
         //     return findIdentities(ele)
         // })
         var base = []
-        findIdentities(base, table[0]).then(result =>
-            findIdentities(result, table[1]).then(result =>
-                findIdentities(result, table[1])
-                    .then(result => {
-                        console.log(result)
-                    }
-                    )))
-        // console.log(promises)
-
-        const asyncRes = await table.reduce(async (last, e) => {
-            await last;
-            return (await findIdentities(last, e))
-        }, 0);
-        // return promises[0].then(result1 =>
-        //     promises[1].then(result2 =>
-        //         promises[2].then(result3 =>
-        //             [result1, result2, result3]
-        //         )
-        //     )
-        // ).then(arrayOfResults => {
-        //     // Do something with all results
-        // });
-        // table.reduce((promiseChain, currentTask) => {
-        //     return promiseChain.then(chainResults =>
-        //         currentTask(promiseChain).then(currentResult => [...chainResults, currentResult]));
-        // }, Promise.resolve([])).then(arrayOfResults => {    // Do something with all results});
-        //     console.log(arrayOfResults)
-        // })
+        table.forEach((v, i) => {
+            // console.log(v.general.unique_users)
+            findIdentities(base, v).then(result => {
+                resolve(result)
+            })
+        })
+        resolve(base)
     })
 }
 
