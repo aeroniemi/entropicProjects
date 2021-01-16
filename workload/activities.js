@@ -1,5 +1,6 @@
 const https = require('https');
 const fs = require('fs');
+var randomColor = require('randomcolor')
 const apiUrl = "https://data.vatsim.net/v3/vatsim-data.json";
 
 // -----------------------------------------------------------------------------
@@ -170,7 +171,7 @@ function mergeIdentities(table) {
                                 pilot.initial_logon_time = pilot.logon_time
                                 final[newCid] = pilot
                             } else if (status == ID_RESUME_FLIGHT) {
-                                if (pilot.callsign == "THY2323") console.log(pilot.callsign, newCid, pilot.logon_time)
+                                // if (pilot.callsign == "THY2323") console.log(pilot.callsign, newCid, pilot.logon_time)
                                 final[newCid].logon_time = pilot.logon_time
                                 final[newCid].log.push(pilot.log[0])
 
@@ -203,3 +204,74 @@ function assembleUsefulTable(subset) {
 exports.assembleUsefulTable = assembleUsefulTable
 exports.mergeIdentities = mergeIdentities
 exports.validReadings = validReadings
+
+parseResults = {
+    lastUpdated: new Date("01-01-1970"),
+    body: [],
+    bodyTable: {}
+}
+function parse() {
+    return new Promise(function (acc, reject) {
+        if ((new Date() - parseResults.lastUpdated) < 60 * 1000) {
+            console.log("new enough")
+            acc(parseResults.body)
+        }
+        console.log("we're here")
+        validReadings(new Date("2020-01-14 19:42:00"), new Date())
+            .then((subset) => assembleUsefulTable(subset))
+            .then((table) => mergeIdentities(table))
+            .then((res) => {
+                var array = Object.values(res)
+                console.log(`Summary Statistics:
+        Flights managed: ${array.length}`
+                )
+                parseResults = {
+                    lastUpdated: new Date(),
+                    body: array,
+                    bodyObj: res
+                }
+                console.log("accepted the promise")
+                acc(parseResults)
+            })
+    })
+}
+exports.parse = parse
+function convertLogToGeoJson(log, full, colour) {
+    var coords = []
+    log.forEach((position) => {
+        coords.push([position.longitude, position.latitude])
+    })
+    var style = { "stroke-width": 0.5 }
+    style.color = colour || randomColor()
+    // console.log(colour)
+    if (full === true) {
+        var geo = {
+            type: "FeatureCollection",
+            features: [
+                {
+                    type: "Feature",
+                    properties: {},
+                    geometry: {
+                        type: "LineString",
+                        coordinates: coords
+                    },
+                    style: style
+                }
+            ]
+        }
+        return geo
+    } else {
+        var geo = {
+            type: "Feature",
+            properties: {},
+            geometry: {
+                type: "LineString",
+                coordinates: coords
+            },
+            style: style
+        }
+        return geo
+    }
+    return
+}
+exports.convertLogToGeoJson = convertLogToGeoJson
