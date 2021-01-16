@@ -1,5 +1,6 @@
 const https = require('https');
 const fs = require('fs');
+const chalk = require('chalk')
 var randomColor = require('randomcolor')
 const apiUrl = "https://data.vatsim.net/v3/vatsim-data.json";
 
@@ -14,17 +15,38 @@ function downloadLatestData() {
                 body += chunk;
             });
             res.on('end', function () {
-                var data = JSON.parse(body);
-                var date = Math.trunc(new Date(data.general.update_timestamp).getTime() / 1000);
+                try {
+                    var data = JSON.parse(body);
+
+                } catch (e) {
+                    reject(e)
+                    return
+                }
+                try {
+                    var date = Math.trunc(new Date(data.general.update_timestamp).getTime() / 1000);
+
+                } catch (e) {
+                    reject(e)
+                    return
+                }
+
                 var fileName = date + ".json";
                 fs.mkdir('./temp/', { recursive: true }, (err) => { if (err) throw err });
-                fs.writeFile("./temp/" + fileName, JSON.stringify(data), "utf8", function (err) {
-                    if (err) {
-                        console.error(err);
-                        reject(err);
-                    };
-                    resolve(fileName);
-                });
+                try {
+
+
+                    fs.writeFile("./temp/" + fileName, JSON.stringify(data), "utf8", function (err) {
+                        if (err) {
+                            console.error(err);
+                            reject(err);
+                        };
+                        resolve(fileName);
+                    });
+                } catch (e) {
+                    reject(e)
+                    return
+                }
+
             });
         }).on('error', function (e) {
             console.error("Got an error: ", e);

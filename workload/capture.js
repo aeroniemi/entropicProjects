@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 let activities = require("./activities.js")
+const chalk = require('chalk')
 var argv = require('yargs/yargs')(process.argv.slice(2))
     .command('watch', 'download datafeed every [seconds]', (yargs) => {
         yargs
@@ -27,6 +28,10 @@ function watch(maxAge, verbose) {
             if (age > maxAge) {
                 if (verbose) console.info(`It's too old. Last updated: ${Math.round(age / (1000 * 60))} minutes ago`)
                 activities.downloadLatestData()
+                    .catch((e) => {
+                        console.log(chalk.bgRed(e))
+                        return
+                    })
             } else {
                 if (verbose) console.info(`Last updated ${Math.round(age / (1000))} seconds ago`)
             }
